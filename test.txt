@@ -1,1 +1,7 @@
 okokok
+making changes
+this is how we pull
+first commit
+then add
+then pull
+then push 
