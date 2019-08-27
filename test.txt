@@ -5,3 +5,6 @@ first add
 then then commit
 then pull
 then push 
+merging is for branches 
+i am in origin when on git hub
+i am in local repo when on my laptop 
