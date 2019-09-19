@@ -25,9 +25,11 @@ DNA_Conc_by_Extraction_Date$Year_Collected<- yearchar
 
 DNA_Conc_by_Extraction_Date$Year_Collected
 
+boxplot(DNA_Conc_by_Extraction_Date$DNA_Concentration_Katy~ DNA_Conc_by_Extraction_Date$Year_Collected)
+
 
 jpeg("~/Desktop/Data_Course_DODGE/EXAMS/Exam_1/DODGE_plotkaty.jpeg")
-plotkaty<-plot(DNA_Conc_by_Extraction_Date$Year_Collected, DNA_Conc_by_Extraction_Date$DNA_Concentration_Katy,
+plotkaty<-boxplot(DNA_Conc_by_Extraction_Date$DNA_Concentration_Katy~ DNA_Conc_by_Extraction_Date$Year_Collected,
                xlab="YEAR",
                ylab="DNA Concentrations",
                main= "Katy Concenctrations")
@@ -35,7 +37,7 @@ dev.off()
 
 
 jpeg("~/Desktop/Data_Course_DODGE/EXAMS/Exam_1/DODGE_plotben.jpeg")
-plotben<-plot(DNA_Conc_by_Extraction_Date$Year_Collected, DNA_Conc_by_Extraction_Date$DNA_Concentration_Ben,
+plotben<-boxplot(DNA_Conc_by_Extraction_Date$DNA_Concentration_Ben ~ DNA_Conc_by_Extraction_Date$Year_Collected,
               xlab = "YEAR",
               ylab = "DNA Concentrations",
               main="Bens Concentrations")
