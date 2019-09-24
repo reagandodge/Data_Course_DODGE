@@ -119,6 +119,17 @@ GPA_RANK
 
 
 
+df %>%
+  filter(admit == 1) %>%
+  group_by(rank) %>%
+  summarize(AV_GPA = mean(gpa))
+
+library(ggplot2)
+
+df %>%
+  filter(admit==1) %>%
+  ggplot(aes(x=as.factor(rank), y=gpa)) + ### change rank to as factor becuase its numeric 
+  geom_boxplot()
 
 
  
