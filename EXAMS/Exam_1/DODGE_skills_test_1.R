@@ -1,6 +1,6 @@
 library(readr)
 DNA_Conc_by_Extraction_Date <- read_csv("~/Desktop/Data_Course_DODGE/EXAMS/Exam_1/DNA_Conc_by_Extraction_Date.csv")
-View(DNA_Conc_by_Extraction_Date)
+DNA_Conc_by_Extraction_Date
 
 summary(DNA_Conc_by_Extraction_Date)
 
@@ -66,6 +66,58 @@ ggplot(Downstairs, aes(x=Date_Collected, y=DNA_Concentration_Ben))+
   geom_point()
 
 dev.off()
+
+### question four 
+
+
+
+library(dplyr)
+
+
+dat %>%
+  filter(Lab =="Upstairs") %>%
+  select(starts_with("D"))
+
+dat= read.csv("/Users/reagandodge/Desktop/Data_Course/Exam_1/DNA_Conc_by_Extraction_Date.csv")
+
+
+
+
+
+
+df = dat %>%
+  group_by(Year_Collected) %>%
+  summarize(mean(DNA_Concentration_Ben))
+
+
+
+dat %>% 
+  group_by(Lab) %>%
+  summarize(MeanBen = mean(DNA_Concentration_Ben),
+            MeanKaty = mean(DNA_Concentration_Katy))
+
+
+table(dat$Year_Collected, dat$Lab)  
+
+
+
+
+
+
+
+
+
+df= read.csv("../Data/GradSchool_Admissions.csv")
+df
+
+### find the averagae GPA based on the rank 
+
+GPA_RANK<-df %>% 
+ group_by(rank) %>%
+  summarize(AV_GPA=mean(gpa))
+GPA_RANK  
+
+
 
 
 
