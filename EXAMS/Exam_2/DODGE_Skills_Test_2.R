@@ -69,45 +69,42 @@ glimpse(dat)
 mod1<- lm(Diversity~CO2_Concentration, data = dat)
 summary(mod1)
 #save this
+jpeg("DODGE_mod1_plot.jpg")
 mp1<-plot(dat$Diversity~dat$CO2_Concentration, data = dat)
 abline(mod1, col= "Red")
+dev.off()
 
 
-
-mod2<- lm(data = dat, Diversity~Aerosol_Density * Precip)
+mod2<- lm(data = dat, Diversity~Aerosol_Density)
 summary(mod2)
 #save this
+jpeg("DODGE_mod2_plot.jpg")
 mp2<- plot(dat$Diversity ~dat$Aerosol_Density, data= dat)
 abline(mod2, col="Red")
+dev.off()
 
 
-
-mod3<-lm(data = dat, Diversity~Mday * Precip)
+mod3<-lm(data = dat, Diversity~Precip)
 summary(mod3)
 #save this 
-mp3<- plot(dat$Diversity ~ dat$Mday, data = dat)
+jpeg("DODGE_mod3_plot.jpg")
+mp3<- plot(dat$Diversity ~ dat$Precip, data = dat)
 abline(mod3, col= "Red")
-
+dev.off()
 	
 3. Compare the residuals of the three models and somehow document which has best explanatory power for the data (10 points)
-    
-mse <- function(mod){mean(residuals(mod)^2)}
-mse(mod1) # 370504.3, lowest residual mean when compared to mod2 and mod3 thus mod1 has the best explanatory power. 
-mse(mod2) # 40912.34
-mse(mod3) # 43919.7
+  
+mean(abs(residuals(mod1))) # 376.3713
+mean(abs(residuals(mod2))) #409.3237
+mean(abs(residuals(mod3))) # 150.6311
 
- 
+#### model 3 has the lowest residuals thus has the best explanatory power. 
+
+
 4.  Use all your models to predict Diversity values in the data set (10 points)
 
-predmod1<-add_predictions(data=dat, mod1)
+dat<-dat %>% gather_predictions(mod1,mod2, mod3)
 
-predmod2<- add_predictions(data = dat, mod2)
-
-predmod3<- add_predictions(data= dat, mod3)
-
-
-
-#nope. addpreds<- gather_predictions(dat, predmod1, predmod2, predmod3)
 
 
 
@@ -117,20 +114,17 @@ Use color or some other aesthetic to differentiate the actual values and all thr
 Hint: gather_predictions()   ...wait, what is this magical function!? Maybe this hint should be for #4 ???
 
 
-ggplot(predmod1,aes(x=CO2_Concentration,y=Diversity)) +
-  geom_point() +
-  geom_point(aes(y=predmod1$pred),color="Red")+
-  geom_point(aes(y=predmod2$pred), color= "Blue")+
-  geom_point(aes(y=predmod3$pred), color= "Yellow")
+
+jpeg("../Exam_2/DODGE_DiversityModelPlot.jpg")
+ggplot(dat, aes(x=Precip, y= Diversity))+
+  geom_point()+
+  geom_point(aes(y=dat$pred), col = "Blue", alpha = .5)+
+  facet_wrap(~model)+
+  labs(title = "Diversity as a Function of Precipitation", subtitle = "Based on three predicted models")
+dev.off()
 
 
-
-
-
-
-
-
-
+#### :D AHHHHHHH! I will buy you cookies if this is right. 
 
 
 6.  Write code to show the predicted values of Diversity for each model using the hypothetical new data 
@@ -141,15 +135,11 @@ df.3<- read.csv("hyp_data.csv")
 
 glimpse(df.3)
 
-predict(mod1,newdata = df.3)
-df.3$mod1pred <- predict(mod1,newdata = df.3)
+df.3<- df.3 %>% gather_predictions(mod1, mod2, mod3)
 
+glimpse(df.3)
+# i am in love with this gather predictions function 
 
-predict(mod2,newdata = df.3)
-df.3$mod2pred <- predict(mod2,newdata = df.3)
-
-predict(mod3,newdata = df.3)
-df.3$mod3pred <- predict(mod3,newdata = df.3)
 
 7.  Export a text file that contains the summary output from *both* your models to "model_summaries.txt" (10 points)
 (Hint: use the sink() function)
@@ -170,10 +160,55 @@ sink()
   8.  Add these hypothetical predicted values (from hypothetical data - Part II, Step 6) to a plot of actual data 
 and differentiate them by color. (10 bonus points possible for a pretty graph)
 
+
+df.4 <- dat %>% 
+  select(Precip,Diversity) %>%
+  rbind(df.3) %>%
+  mutate(Source = c(rep("Observed",894),rep("Predicted",30)))
+
+ggplot(df3,aes(x=disp,y=mpg)) + geom_point()
+
+ggplot(df3,aes(x=disp,y=mpg)) + 
+  geom_smooth(method = "lm",se=FALSE,formula = y~poly(x,3)) +
+  geom_point(aes(color=Source),size=3) +
+  scale_color_manual(values = c("Black","Red")) +
+  labs(title = mod3$call)
+
+
+
+
+
+
+
 *Bonus*
   9.  Split the atmosphere.csv data into training and testing sets, randomly. Train your single best model on 50% of the data and 
 test it on the remaining 50% of the data. Find some way to show how well it fits the data.
 This is the only cross-validation part of the exam. (10 bonus points for proper code)
+library(caret)
+
+
+set.seed(123)
+
+trainingsamples <- createDataPartition(dat$Diversity,p=0.5,list=FALSE)
+
+train <- dat[trainingsamples,]
+
+test <- dat[-trainingsamples,]
+
+mod9 <- lm(data = train,Diversity ~ poly(Precip,3))
+
+
+df5<-add_predictions(test,mod5)
+
+
+
+
+
+
+
+
+
+
 
 
 Push the following to your github web page in your new Exam_2 directory:

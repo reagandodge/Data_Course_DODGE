@@ -19,43 +19,39 @@ F-statistic: 82.82 on 1 and 296 DF,  p-value: < 2.2e-16
 
 
 Call:
-lm(formula = Diversity ~ Aerosol_Density * Precip, data = dat)
+lm(formula = Diversity ~ Aerosol_Density, data = dat)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--508.94 -126.56  -34.59   93.17  960.13 
+-1456.4  -387.8    30.4   304.4  3382.5 
 
 Coefficients:
-                         Estimate Std. Error t value Pr(>|t|)    
-(Intercept)             -4.432158  33.717563  -0.131    0.896    
-Aerosol_Density          0.473060   0.103986   4.549 7.88e-06 ***
-Precip                 210.656272   7.788157  27.048  < 2e-16 ***
-Aerosol_Density:Precip  -0.012259   0.009793  -1.252    0.212    
+                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      59.2454    64.6477   0.916     0.36    
+Aerosol_Density   2.6116     0.1962  13.314   <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 203.6 on 294 degrees of freedom
-Multiple R-squared:  0.9137,	Adjusted R-squared:  0.9128 
-F-statistic:  1038 on 3 and 294 DF,  p-value: < 2.2e-16
+Residual standard error: 546.4 on 296 degrees of freedom
+Multiple R-squared:  0.3746,	Adjusted R-squared:  0.3724 
+F-statistic: 177.3 on 1 and 296 DF,  p-value: < 2.2e-16
 
 
 Call:
-lm(formula = Diversity ~ Mday * Precip, data = dat)
+lm(formula = Diversity ~ Precip, data = dat)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--512.42 -112.12  -48.12   81.06 1007.09 
+-513.35 -114.48  -46.87   85.67  991.32 
 
 Coefficients:
-             Estimate Std. Error t value Pr(>|t|)    
-(Intercept) 100.28537   37.76845   2.655  0.00836 ** 
-Mday         -0.03812    2.23963  -0.017  0.98643    
-Precip      211.37991    8.59247  24.601  < 2e-16 ***
-Mday:Precip   0.26786    0.52717   0.508  0.61176    
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  101.109     17.951   5.633 4.13e-08 ***
+Precip       215.317      4.003  53.789  < 2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 211 on 294 degrees of freedom
-Multiple R-squared:  0.9074,	Adjusted R-squared:  0.9064 
-F-statistic:   960 on 3 and 294 DF,  p-value: < 2.2e-16
+Residual standard error: 210.5 on 296 degrees of freedom
+Multiple R-squared:  0.9072,	Adjusted R-squared:  0.9069 
+F-statistic:  2893 on 1 and 296 DF,  p-value: < 2.2e-16
 
