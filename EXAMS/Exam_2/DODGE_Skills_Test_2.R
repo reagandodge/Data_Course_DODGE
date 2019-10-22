@@ -131,14 +131,17 @@ dev.off()
 found in hyp_data.csv (10 points)
 
 
-df.3<- read.csv("hyp_data.csv")
+new.div<- read.csv("hyp_data.csv")
 
-glimpse(df.3)
+hyppred1<- hyp %>% add_predictions(mod1) %>% mutate(model= "mod1")
 
-df.3<- df.3 %>% gather_predictions(mod1, mod2, mod3)
+hyppred2<- hyp %>% add_predictions(mod2) %>% mutate(model = "mod2")
 
-glimpse(df.3)
-# i am in love with this gather predictions function 
+hyppred3<- hyp %>% add_predictions(mod3) %>% mutate(model = "mod3")
+
+fullpredicted<- rbind(hyppred1, hyppred2, hyppred3)
+
+
 
 
 7.  Export a text file that contains the summary output from *both* your models to "model_summaries.txt" (10 points)
@@ -161,18 +164,18 @@ sink()
 and differentiate them by color. (10 bonus points possible for a pretty graph)
 
 
-df.4 <- dat %>% 
-  select(Precip,Diversity) %>%
-  rbind(df.3) %>%
-  mutate(Source = c(rep("Observed",894),rep("Predicted",30)))
+fullpredicted$BarcodeSequence <- "NA"
 
-ggplot(df3,aes(x=disp,y=mpg)) + geom_point()
+fullpredicted$SampleID <- "NA"
 
-ggplot(df3,aes(x=disp,y=mpg)) + 
-  geom_smooth(method = "lm",se=FALSE,formula = y~poly(x,3)) +
-  geom_point(aes(color=Source),size=3) +
-  scale_color_manual(values = c("Black","Red")) +
-  labs(title = mod3$call)
+glimpse(dat)
+ggplot(fullpredicted, aes(x=as.factor(Precip), y=pred)) +
+  geom_point() + facet_wrap(~model) + geom_point(aes(y=pred), color = "Red") 
+
+
+
+# :( 
+
 
 
 
@@ -198,13 +201,11 @@ test <- dat[-trainingsamples,]
 mod9 <- lm(data = train,Diversity ~ poly(Precip,3))
 
 
-df5<-add_predictions(test,mod5)
+df5<-add_predictions(test,mod9)
 
 
 
-
-
-
+####..... oof. 
 
 
 

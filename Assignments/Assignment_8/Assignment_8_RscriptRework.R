@@ -22,9 +22,15 @@ glimpse(shroom)
 
 
 modlight = aov(GrowthRate ~ Light * Species, data = shroom)
+
+
 plot(shroom$GrowthRate ~ shroom$Light)
 abline(modlight, col="Red")
+
+
 summary(modlight)
+
+
 
 modN = lm(GrowthRate ~ Nitrogen * Species, data = shroom)
 plot(shroom$GrowthRate ~ shroom$Nitrogen)
