@@ -102,27 +102,32 @@ for(i in religions){
 # Browse through those plots and answer the following questions:
 # 1.  Which religious group correlates most strongly in a given area with the proportion of non-religious people?
 
-
+Based on the graphs it can be determined that the strongest correlation between religious people and between non religious people is the LDS religion. 
 
 
 
 # 2.  What is the direction of that correlation?
 
 
-
+This is a negative correlation: the more non religious humans the less LDS humans. 
 
 # 3.  Which religious group has the second stronglest correlation, as above?
 
-
+The Episcopal church it looks like. 
 
 # 4.  What is the direction of THAT correlation?
 
-
+A positive correlation.
 
 
 # 5.  What can you say about these relationships?
 
-People are either LDS or not religious 
+It can be said through these graphs that if someone isn’t LDS 
+then they aren’t religious either. Someone is either LDS or not religious.
+However, because the episcopal church has the second 
+strongest correlation it can be said that 
+more non- religious people there are the more episcopal 
+church members there are.
 
 # UPLOAD YOUR ANSWERS TO CANVAS
 # DON'T FORGET TO PUSH YOUR TIDY CODE TO GITHUB AS WELL!
