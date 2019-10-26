@@ -1,0 +1,128 @@
+---
+title: "more markdown practice"
+author: "rdodge"
+date: "10/24/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Explorator data analysis trial 1
+
+___
+
+WE are looking the "Arabidopsis" data set from the *lmer* package. 
+
+Load the packages and data
+```{r message=FALSE, warning=FALSE}
+library(lme4)
+library(tidyverse)
+library(modelr)
+
+df = Arabidopsis
+```
+
+Lets take a look at the date 
+```{r, include=FALSE}
+library(skimr)
+?Arabidopsis
+```
+
+
+```{r}
+skim(df)
+```
+
+
+We need to clean up the data and change the columns classes to what they should be 
+
+
+
+```{r, echo=FALSE}
+df$gen<- factor(df$gen)
+df$nutrient <- factor(df$nutrient)
+df$rack<- factor(df$rack)
+```
+
+
+Lets check the experimental design 
+
+```{r}
+xtabs(data = df, formula = ~ gen+reg)
+```
+
+Genotype is nested. Not all genotypes appeared in all regions
+
+```{r}
+ggplot(df, aes(y=total.fruits, x= nutrient, fill= reg))+
+  geom_boxplot()
+```
+
+Create a model of total fruits explained by region, nutrient level, and genotype. Use an anova because these are all factors
+
+
+Start with an ANOVA 
+
+```{r}
+library(dplyr)
+library(modelr)
+str(df)
+
+mod = aov(data = df, total.fruits ~ reg * gen + nutrient)
+summary(mod)
+
+df = add_predictions(df, mod)
+#predictions vs observations
+ggplot(df, aes(x= reg, color=nutrient))+
+  geom_point(aes(y=total.fruits))+
+  geom_point(aes(y=pred), color = "Black")
+```
+Looks like ANOVA isn't doing a great job. 
+Lets look at the residuals 
+
+```{r}
+plot(mod)
+
+xtabs(data=df, ~gen+amd)
+```
+
+
+Lets try a multilevel model!
+
+
+Because anything else is shit 
+
+```{r}
+mod2=lmer(data = df, total.fruits ~ nutrient +  (1|rack) + (1|status) + (1|popu/gen) (1|reg/gen) + (1|amd))
+
+
+df= add_predictions(df, mod2, var = "pred2")
+
+
+ggplot(df, aes(x= nutrient, color=amd))+
+  geom_point(aes(y=total.fruits))+
+  geom_point(aes(y=pred2), color = "Black")
+
+
+
+#the thing on the right is nested on the thing on the left. 1| allows us to change the intercept 
+
+
+
+```
+
+
+```{r}
+#mod3 <- aov(data = df, total.fruits ~ nutrient * amd * status * popu * gen * reg )
+
+df <- add_predictions(df, mod3, var = "pred3")
+
+ggplot(df, aes(x= nutrient, color=amd))+
+  geom_point(aes(y=total.fruits))+
+  geom_point(aes(y=pred3), color = "Black")
+
+
+```
+
