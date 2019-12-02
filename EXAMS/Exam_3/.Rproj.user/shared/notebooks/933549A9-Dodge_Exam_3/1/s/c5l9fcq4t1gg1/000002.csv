@@ -1,0 +1,2 @@
+"0","creek <- subset(x = data, Sample.ID == ""Clear_Creek"")"
+"0","as.data.frame(creek)"

@@ -1,0 +1,2 @@
+"0","wastewater <- pivot_longer(data = wastewater, cols= c(Hr_144, Hr_48, Hr_24),"
+"0","                  	names_to = ""inc_hrs"", values_to = ""values"")"

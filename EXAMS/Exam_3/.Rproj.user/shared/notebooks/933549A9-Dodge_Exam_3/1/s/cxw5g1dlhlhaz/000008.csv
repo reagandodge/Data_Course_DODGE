@@ -1,0 +1,2 @@
+"0","mod1 <- aov(data=creek, creek$values~creek$Dilution)"
+"0","plot(creek$values~creek$Dilution, data = creek)"

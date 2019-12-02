@@ -1,0 +1,10 @@
+"0","fig1<-ggplot(data,aes(x=data$Hr_24,fill= Sample.ID)) +"
+"0","  geom_histogram()"
+"0",""
+"0",""
+"0",""
+"0","fig2<-ggplot(data,aes(x=data$Hr_24,fill= Substrate)) +"
+"0","  geom_histogram()"
+"0","ggplotly(fig1)"
+"2","`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+"

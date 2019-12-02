@@ -1,0 +1,5 @@
+"0","creek <- pivot_longer(data = creek, cols= c(Hr_144, Hr_48, Hr_24),"
+"0","                  	names_to = ""inc_hrs"", values_to = ""values"")"
+"0",""
+"0","soil1 <- subset(x = data, Sample.ID == ""Soil_1"")"
+"0","as.data.frame(soil1)"

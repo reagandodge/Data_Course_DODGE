@@ -1,0 +1,278 @@
+---
+title: "Exam 3"
+author: "Reagan Dodge"
+date: "11/23/2019"
+output: html_document
+---
+
+This is my Exam 3 document 
+
+Lets load the data and take a look at it. 
+
+```{r, ECHO= FALSE, include=FALSE}
+
+library(tidyverse)
+library(gganimate) 
+library(ggplot2)
+library(plotly)
+library(daff)
+library(modelr)
+library(dplyr)
+library(tidyr)
+```
+
+``` {r, ECHO= FALSE , eval= TRUE}
+data<- read.csv(file = "BioLogData_Exam3.csv", sep = "|")
+summary(data)
+```
+
+
+Lets do some exploratory analysis 
+
+``` {r}
+pairs(data)
+class(data$Sample.ID)
+class(data$Rep)
+class(data$Well)
+class(data$Dilution)
+class(data$Substrate)
+class(data$Hr_24)
+class(data$Hr_48)
+class(data$Hr_144)
+```
+
+Some regressions models and summary stats. 
+
+``` {r, ECHO = FALSE, eval = TRUE}
+a<- lm(formula = Dilution ~ Hr_24, data = data)
+summary(a)
+
+b<- lm(formula = Dilution ~ Hr_48, data = data)
+summary(b)
+
+c<- lm(formula= Dilution ~ Hr_144, data = data)
+summary(c)
+```
+
+Hr 144 is the most significant to the Dilution factor. 
+
+``` {r, ECHO = FALSE, eval= TRUE}
+hist(data$Dilution)
+hist(data$Hr_144)
+hist(data$Hr_48)
+hist(data$Hr_24)
+```
+
+```{r}
+
+names(data)
+ggplot(data,aes(x=data$Dilution,y=data$Substrate)) +
+  geom_boxplot() + facet_wrap(~Sample.ID)
+
+```
+
+```{r, ECHO = FALSE,eval=TRUE}
+fig1<-ggplot(data,aes(x=data$Hr_24,fill= Sample.ID)) +
+  geom_histogram()
+
+
+
+fig2<-ggplot(data,aes(x=data$Hr_24,fill= Substrate)) +
+  geom_histogram()
+ggplotly(fig1)
+ggplotly(fig2)
+```
+
+``` {r, ECHO = FALSE, eval= TRUE}
+fig3<-ggplot(data,aes(x=data$Hr_48,fill= Sample.ID)) +
+  geom_histogram()
+
+
+
+fig4<-ggplot(data,aes(x=data$Hr_48,fill= Substrate)) +
+  geom_histogram()
+
+
+
+
+fig5<-ggplot(data,aes(x=data$Hr_144,fill= Sample.ID)) +
+  geom_histogram()
+
+
+
+fig6<-ggplot(data,aes(x=data$Hr_144,fill= Substrate)) +
+  geom_histogram()
+
+ggplotly(fig3)
+ggplotly(fig4)
+ggplotly(fig5)
+ggplotly(fig6)
+```
+
+
+## QUESTION 1  
+**Which sample locations are functionally different from each other in terms of what C-substrates they can utilize? **
+
+``` {r}
+levels(data$Sample.ID)
+levels(data$Substrate)
+```
+
+
+```{r, echo=FALSE, eval=TRUE, results='hide'}
+creek <- subset(x = data, Sample.ID == "Clear_Creek")
+as.data.frame(creek)
+creek <- pivot_longer(data = creek, cols= c(Hr_144, Hr_48, Hr_24),
+                  	names_to = "inc_hrs", values_to = "values")
+
+soil1 <- subset(x = data, Sample.ID == "Soil_1")
+as.data.frame(soil1)
+soil1 <- pivot_longer(data = soil1, cols= c(Hr_144, Hr_48, Hr_24),
+                  	names_to = "inc_hrs", values_to = "values")
+
+soil2 <- subset(x = data, Sample.ID == "Soil_2")
+as.data.frame(soil2)
+soil2 <- pivot_longer(data = soil2, cols= c(Hr_144, Hr_48, Hr_24),
+                  	names_to = "inc_hrs", values_to = "values")
+
+wastewater <- subset(x = data, Sample.ID == "Waste_Water")
+as.data.frame(wastewater)
+wastewater <- pivot_longer(data = wastewater, cols= c(Hr_144, Hr_48, Hr_24),
+                  	names_to = "inc_hrs", values_to = "values")
+```
+
+```{r, echo=FALSE, eval=TRUE}
+ggplot(data=creek, aes(x = Substrate, y= values)) +
+  geom_point(aes(col= "red")) + geom_smooth(method = "lm")+
+  labs(title= "Creek Values", subtitle= "Absorbancy rates after 24, 48, and 144 hours",
+   	x="Carbon Source", y="Light absorbance value")+
+  theme(axis.text.x=element_text(angle=90,hjust=1))+
+  theme(plot.background = element_rect(colour = "black"))
+
+ggplot(data=soil1, aes(x = Substrate, y= values)) +
+  geom_point(aes(col= "red")) + geom_smooth(method = "lm")+
+  labs(title= "Soil 1 Values", subtitle= "Absorbancy rates after 24, 48, and 144 hours" , x="Carbon Source", y="Light absorbance value")+
+  theme(axis.text.x=element_text(angle=90,hjust=1))+
+  theme(plot.background = element_rect(colour = "black"))
+
+ggplot(data=soil2, aes(x = Substrate, y= values)) +
+  geom_point(aes(col = "red")) + geom_smooth(method = "lm")+
+  labs(title= "Soil 2 Values", subtitle= "Absorbancy rates after 24, 48, and 144",
+   	x="Carbon Source", y="Light absorbance value")+
+  theme(axis.text.x=element_text(angle=90,hjust=1))+
+  theme(plot.background = element_rect(colour = "black"))
+
+ggplot(data=wastewater, aes(x = Substrate, y= values)) +
+  geom_point(aes(col= "red")) + geom_smooth(method = "lm")+
+  labs(title= "Waste Water Values", subtitle= "Absorbancy rates after 24, 48, and 144",
+   	x="Carbon Source", y="Light absorbance value")+
+  theme(axis.text.x=element_text(angle=90,hjust=1))+
+  theme(plot.background = element_rect(colour = "black"))
+
+```  
+
+# Soil values are functionally different than waste water values and clear creek values. 
+It looks like soil values are more different than waste water and clear creek because they utilize more carbon substrates. 
+
+
+## QUESTION 2
+**Are Soil and Water samples significantly different overall (as in, overall diversity of usable carbon sources)? What about for individual carbon substrates?**
+
+
+
+``` {r, ECHO= FALSE, eval= TRUE}
+
+
+creek <- creek %>% 
+  mutate(diversity="water")
+wastewater <- wastewater %>% 
+  mutate(diversity="water")
+soil1 <- soil1 %>%
+  mutate(diversity="soil")
+soil2 <- soil2 %>%
+  mutate(diversity="soil")
+
+data<- rbind(creek, wastewater, soil1, soil2)
+
+mod1<- lm(data= data, values ~ Substrate * diversity)
+summary(mod1) 
+
+
+```
+
+
+## QUESTION 3
+**If there are differences between samples and on which C-substrates are driving those differences? **
+
+Yes, there are differences. This can determined by seeing which C-substrates are signifcant in the above model. 
+
+
+## Question 4:  
+**Does the dilution factor change any of these answers?**    
+
+Lets take a look and make some more models 
+```{r, echo=FALSE, eval = TRUE}
+mod1 <- aov(data=creek, creek$values~creek$Dilution)
+plot(creek$values~creek$Dilution, data = creek)
+abline(mod1)
+summary(mod1)
+
+
+
+
+mod2 <- aov(data=soil1, soil1$values~soil1$Dilution)
+plot(soil1$values~soil1$Dilution, data=soil1)
+abline(mod2)
+summary(mod2)
+
+
+mod3 <- aov(data=soil2, soil2$values~soil2$Dilution)
+summary(mod3)
+plot(soil2$values~soil2$Dilution, data = soil2)
+abline(mod3)
+
+
+mod4 <- aov(data=wastewater, wastewater$values~wastewater$Dilution)
+plot(wastewater$values~wastewater$Dilution)
+abline(mod4)
+summary(mod4)
+
+mod5<- aov(data = data, data$values~ data$Substrate * data$diversity)
+
+```
+
+
+Now lets add some predictions to a chosen model
+
+``` {r, ECHO = FALSE, eval = TRUE}
+
+data<- add_predictions(data= data, model = mod5)
+
+p<-ggplot(data, aes(x= Substrate, y= values))+
+  geom_point()+ facet_wrap(~diversity)+
+  geom_point(aes(y=pred), col= "orange")+
+  theme(axis.text.x = element_text(angle = 90))
+
+
+ggplotly(p)
+
+```
+
+
+Less carbon is being consumed as the concentration of the soil samples increase.  
+More carbon is being consumed as the concentration of the water samples increase.
+
+
+## QUESTION 5
+ **Do the control samples indicate any contamination?**
+ 
+Since water is a negative control, if the BioLog reads anything other than a 0 we can assume there was contamination. 
+
+```{r, echo=FALSE, eval=TRUE}
+water <-data %>%
+  filter(data$Substrate == "Water")
+water
+```
+Notice the values for Hr_24, Hr_48, and Hr_144, we can see that all of the values are 0, telling us that there was no contamination. 
+
+

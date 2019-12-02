@@ -1,0 +1,4 @@
+"0",""
+"0",""
+"0","mod4 <- aov(data=wastewater, wastewater$values~wastewater$Dilution)"
+"0","plot(wastewater$values~wastewater$Dilution)"

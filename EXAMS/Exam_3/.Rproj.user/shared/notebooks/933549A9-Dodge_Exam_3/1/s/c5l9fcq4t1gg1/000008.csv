@@ -1,0 +1,5 @@
+"0","soil2 <- pivot_longer(data = soil2, cols= c(Hr_144, Hr_48, Hr_24),"
+"0","                  	names_to = ""inc_hrs"", values_to = ""values"")"
+"0",""
+"0","wastewater <- subset(x = data, Sample.ID == ""Waste_Water"")"
+"0","as.data.frame(wastewater)"

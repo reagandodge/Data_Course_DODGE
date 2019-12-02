@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1574792015533.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "508163225",
+    "id" : "A0AF0D4B",
+    "lastKnownWriteTime" : 1575244655,
+    "last_content_update" : 1575244655291,
+    "path" : "~/Desktop/Data_Course_DODGE/EXAMS/Exam_3/Dodge_Exam_3.Rmd",
+    "project_path" : "Dodge_Exam_3.Rmd",
+    "properties" : {
+        "cursorPosition" : "174,76",
+        "scrollLine" : "172"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

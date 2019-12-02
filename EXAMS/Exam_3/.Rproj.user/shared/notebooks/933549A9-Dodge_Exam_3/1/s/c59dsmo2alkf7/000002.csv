@@ -1,0 +1,6 @@
+"0","ggplot(data=creek, aes(x = Substrate, y= values)) +"
+"0","  geom_point(aes(col= ""red"")) + geom_smooth(method = ""lm"")+"
+"0","  labs(title= ""Creek Values"", subtitle= ""Absorbancy rates after 24, 48, and 144 hours"","
+"0","   	x=""Carbon Source"", y=""Light absorbance value"")+"
+"0","  theme(axis.text.x=element_text(angle=90,hjust=1))+"
+"0","  theme(plot.background = element_rect(colour = ""black""))"
