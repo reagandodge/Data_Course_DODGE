@@ -73,35 +73,35 @@ ggplot(data,aes(x=data$Dilution,y=data$Substrate)) +
 
 ```{r, ECHO = FALSE,eval=TRUE}
 fig1<-ggplot(data,aes(x=data$Hr_24,fill= Sample.ID)) +
-  geom_histogram()
-
+  geom_histogram(bins = 10)
+fig1
 
 
 fig2<-ggplot(data,aes(x=data$Hr_24,fill= Substrate)) +
-  geom_histogram()
+  geom_histogram(bins = 10)
 ggplotly(fig1)
 ggplotly(fig2)
 ```
 
 ``` {r, ECHO = FALSE, eval= TRUE}
 fig3<-ggplot(data,aes(x=data$Hr_48,fill= Sample.ID)) +
-  geom_histogram()
+  geom_histogram(bins = 10)
 
 
 
 fig4<-ggplot(data,aes(x=data$Hr_48,fill= Substrate)) +
-  geom_histogram()
+  geom_histogram(bins = 10)
 
 
 
 
 fig5<-ggplot(data,aes(x=data$Hr_144,fill= Sample.ID)) +
-  geom_histogram()
+  geom_histogram(bins = 10)
 
 
 
 fig6<-ggplot(data,aes(x=data$Hr_144,fill= Substrate)) +
-  geom_histogram()
+  geom_histogram(bins = 10)
 
 ggplotly(fig3)
 ggplotly(fig4)
@@ -144,27 +144,27 @@ wastewater <- pivot_longer(data = wastewater, cols= c(Hr_144, Hr_48, Hr_24),
 ```{r, echo=FALSE, eval=TRUE}
 ggplot(data=creek, aes(x = Substrate, y= values)) +
   geom_point(aes(col= "red")) + geom_smooth(method = "lm")+
-  labs(title= "Creek Values", subtitle= "Absorbancy rates after 24, 48, and 144 hours",
+  labs(title= "Creek Values", subtitle= "Absorbancy after 24, 48, and 144 hours",
    	x="Carbon Source", y="Light absorbance value")+
   theme(axis.text.x=element_text(angle=90,hjust=1))+
-  theme(plot.background = element_rect(colour = "black"))
+  theme(plot.background = element_rect(color = "black"))
 
 ggplot(data=soil1, aes(x = Substrate, y= values)) +
   geom_point(aes(col= "red")) + geom_smooth(method = "lm")+
-  labs(title= "Soil 1 Values", subtitle= "Absorbancy rates after 24, 48, and 144 hours" , x="Carbon Source", y="Light absorbance value")+
+  labs(title= "Soil 1 Values", subtitle= "Absorbancy after 24, 48, and 144 hours" , x="Carbon Source", y="Light absorbance value")+
   theme(axis.text.x=element_text(angle=90,hjust=1))+
-  theme(plot.background = element_rect(colour = "black"))
+  theme(plot.background = element_rect(color = "black"))
 
 ggplot(data=soil2, aes(x = Substrate, y= values)) +
   geom_point(aes(col = "red")) + geom_smooth(method = "lm")+
-  labs(title= "Soil 2 Values", subtitle= "Absorbancy rates after 24, 48, and 144",
+  labs(title= "Soil 2 Values", subtitle= "Absorbancy after 24, 48, and 144",
    	x="Carbon Source", y="Light absorbance value")+
   theme(axis.text.x=element_text(angle=90,hjust=1))+
-  theme(plot.background = element_rect(colour = "black"))
+  theme(plot.background = element_rect(color = "black"))
 
 ggplot(data=wastewater, aes(x = Substrate, y= values)) +
   geom_point(aes(col= "red")) + geom_smooth(method = "lm")+
-  labs(title= "Waste Water Values", subtitle= "Absorbancy rates after 24, 48, and 144",
+  labs(title= "Waste Water Values", subtitle= "Absorbancy after 24, 48, and 144",
    	x="Carbon Source", y="Light absorbance value")+
   theme(axis.text.x=element_text(angle=90,hjust=1))+
   theme(plot.background = element_rect(colour = "black"))
@@ -266,13 +266,13 @@ More carbon is being consumed as the concentration of the water samples increase
 ## QUESTION 5
  **Do the control samples indicate any contamination?**
  
-Since water is a negative control, if the BioLog reads anything other than a 0 we can assume there was contamination. 
+Since water is a negative control the BioLog should only read 0. If it reads any value other than a zero we can assume contamination.
 
 ```{r, echo=FALSE, eval=TRUE}
 water <-data %>%
   filter(data$Substrate == "Water")
 water
 ```
-Notice the values for Hr_24, Hr_48, and Hr_144, we can see that all of the values are 0, telling us that there was no contamination. 
+Notice the values for Hr_24, Hr_48, and Hr_144, we can see that all of the values are 0, telling us that there was no contamination.   
 
 
